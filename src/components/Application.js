@@ -1,72 +1,60 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
-
-
-const appointments = {
-  "1": {
-    id: 1,
-    time: "12pm",
-  },
-  "2": {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 3,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  "3": {
-    id: 3,
-    time: "2pm",
-  },
-  "4": {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Archie Andrews",
-      interviewer: {
-        id: 4,
-        name: "Cohana Roy",
-        avatar: "https://i.imgur.com/FK8V841.jpg",
-      }
-    }
-  },
-  "5": {
-    id: 5,
-    time: "4pm",
-  }
-};
+import { getAppointmentsForDay } from "helpers/selectors";
 
 export default function Application(props) {
   // Using spread operator to create a new object with all the existing keys of state
   const setDay = day => setState({ ...state, day });
-  const setDays = days => setState(prev => ({ ...prev, days }));
+  // const setDays = days => setState(prev => ({ ...prev, days }));
+  let dailyAppointments = [];
 
   // Combining states
   const [state, setState] = useState({
     day: "Monday",
-    days: []
+    days: [],
+    appointments: {}
   });
 
   useEffect(() => {
+    const daysUrl = `http://localhost:8001/api/days`;
+    const appointmentsUrl = 'http://localhost:8001/api/appointments';
+
+    // Promise.all will make all requests before updating the state
+    Promise.all([
+      axios.get(daysUrl),
+      axios.get(appointmentsUrl)
+    ]).then((all) => {
+      // console.log("all", all);
+      const newDaysState = all[0].data; 
+      const newAppointmentsState = all[1].data;
+
+      setState(prev => ({
+        ...prev,
+        // day: newDaysState[0].name,
+        days: newDaysState,
+        appointments: newAppointmentsState
+      }));
+    });
+
     // Retrieve the days from the api
-    axios.get(`http://localhost:8001/api/days`)
-      .then(response => {
-        // Setting the days state with the data from the response
-        setDays(response.data);
-        console.log("response", response);
-      });
+    // axios.get(`http://localhost:8001/api/days`)
+    //   .then(response => {
+    // Setting the days state with the data from the response
+    // setDays(response.data);
+    //   console.log("response", response);
+    // });
   }, []);
 
-  const newArray = Object.values(appointments).map((appointment) => {
+  // Pass the function only if state.days exists/is true
+  if (state.days) {
+    dailyAppointments = getAppointmentsForDay(state, state.day);
+  }
+
+  // console.log("state.day", state.day)
+  const newArray = dailyAppointments.map((appointment) => {
     return <Appointment
       key={appointment.id}
       {...appointment} // This way spreads the object into the props definition intead of writing them one by one
@@ -76,6 +64,8 @@ export default function Application(props) {
     />;
   });
 
+  // console.log("daily", dailyAppointments);
+  // console.log("state", state)
   return (
     <main className="layout">
       <section className="sidebar">
