@@ -3,6 +3,7 @@ import "components/Appointment/styles.scss";
 import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
+import Form from "./Form";
 import useVisualMode from "hooks/useVisualMode";
 
 const EMPTY = "EMPTY";
@@ -25,6 +26,7 @@ export default function Appointment(props) {
             interviewer={props.interview.interviewer.name}
           />
         )}
+        {mode === CREATE && <Form interviewers = {[]} />}
       </header>
     </article>
   );
