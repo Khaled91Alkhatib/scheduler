@@ -3,7 +3,7 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 export default function Application(props) {
   // Using spread operator to create a new object with all the existing keys of state
@@ -61,6 +61,8 @@ export default function Application(props) {
   // console.log("state", state);
 
   // console.log("state.day", state.day)
+  const interviewers = getInterviewersForDay(state, state.day);
+  // console.log(interviewers)
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
     // console.log(dailyAppointments)
@@ -70,6 +72,7 @@ export default function Application(props) {
       id={appointment.id}
       time={appointment.time}
       interview={interview}
+      interviewers={interviewers}
     />;
   });
 
