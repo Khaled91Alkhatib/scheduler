@@ -71,14 +71,12 @@ export default function Application(props) {
       [id]: appointment
     };
     setState({ ...state, appointments });
+    
+    // The code below will make the new appointments persist after browser refresh
+    return axios
+      .put(`/api/appointments/${id}`, { interview })
   }
 
-  // const [state, setState] = useState({
-  //   day: "Monday",
-  //   days: [],
-  //   appointments: {},
-  //   interviewers: {}
-  // });
 
   // console.log("state.day", state.day)
   const interviewers = getInterviewersForDay(state, state.day);
