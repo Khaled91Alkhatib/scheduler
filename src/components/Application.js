@@ -58,7 +58,11 @@ export default function Application(props) {
   if (state.days) {
     dailyAppointments = getAppointmentsForDay(state, state.day);
   }
-  // console.log("state", state);
+  console.log("state", state);
+
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+  }
 
   // console.log("state.day", state.day)
   const interviewers = getInterviewersForDay(state, state.day);
@@ -73,8 +77,10 @@ export default function Application(props) {
       time={appointment.time}
       interview={interview}
       interviewers={interviewers}
+      bookInterview={bookInterview}
     />;
   });
+
 
   // console.log("daily", dailyAppointments);
   // console.log("state", state)
