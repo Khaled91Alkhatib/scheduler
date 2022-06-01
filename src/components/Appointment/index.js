@@ -11,6 +11,7 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETING = "DELETING";
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
@@ -23,8 +24,21 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    console.log(props.bookInterview(props.id, interview));
+    props.bookInterview(props.id, interview);
+
+    // The code below will show the SAVING component immediately then switch to SHOW
     transition(SAVING);
+    setTimeout(() => {
+      transition(SHOW);
+    }, 1500);
+  }
+
+  function deleteAppointment() {
+    props.cancelInterview(props.id);
+    transition(DELETING);
+    setTimeout(() => {
+      transition(EMPTY);
+    }, 1500);
   }
 
   return (
@@ -36,6 +50,7 @@ export default function Appointment(props) {
           <Show
             student={props.interview.student}
             interviewer={props.interview.interviewer.name}
+            onDelete={deleteAppointment}
           />
         )}
         {mode === CREATE && <Form
@@ -46,6 +61,11 @@ export default function Appointment(props) {
         {mode === SAVING && (
           <Status
             message="Saving"
+          />
+        )}
+        {mode === DELETING && (
+          <Status
+            message="Deleting"
           />
         )}
       </header>
