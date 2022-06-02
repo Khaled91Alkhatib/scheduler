@@ -17,6 +17,7 @@ export default function Form(props) {
     props.onCancel();
   };
 
+  // This represents whet will the onSave prop in Form component will do
   const saveData = function () {
     props.onSave(student, interviewerId);
   };
