@@ -70,11 +70,10 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-    setState({ ...state, appointments });
-
     // The code below will make the new appointments persist after browser refresh
     return axios
-      .put(`/api/appointments/${id}`, { interview });
+      .put(`/api/appointments/${id}`, { interview })
+      .then(() => { setState({ ...state, appointments }); });
 
   }
   function cancelInterview(id) {
@@ -87,12 +86,11 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-    setState({ ...state, appointments });
 
     return axios
-      .delete(`/api/appointments/${id}`);
+      .delete(`/api/appointments/${id}`)
+      .then(() => { setState({ ...state, appointments }); });
   }
-
 
   // console.log("state.day", state.day)
   const interviewers = getInterviewersForDay(state, state.day);
