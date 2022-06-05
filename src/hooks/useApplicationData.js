@@ -89,9 +89,19 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
+    // This function will update the spots remaining when we cancel/delete a new interview
+    const updatedDays = state.days.map((day) => {
+      if (day.name === state.day) {
+        const spots = day.spots + 1;
+        return { ...day, spots };
+      }
+      return day;
+    });
+
+
     return axios
       .delete(`/api/appointments/${id}`)
-      .then(() => { setState({ ...state, appointments }); });
+      .then(() => { setState({ ...state, appointments, days: updatedDays }); });
   }
   return { state, setDay, bookInterview, cancelInterview };
 }
