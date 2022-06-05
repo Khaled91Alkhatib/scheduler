@@ -51,19 +51,30 @@ export default function useApplicationData() {
 
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    // console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview: { ...interview },
     };
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
+
+    // This function will update the spots remaining when we book a new interview
+    const updatedDays = state.days.map((day) => {
+      if (day.name === state.day && state.appointments[id].interview === null) {
+        const spots = day.spots - 1;
+        return { ...day, spots };
+      }
+      return day;
+    });
+
     // The code below will make the new appointments persist after browser refresh
     return axios
       .put(`/api/appointments/${id}`, { interview })
-      .then(() => { setState({ ...state, appointments }); });
+      .then(() => { setState({ ...state, appointments, days: updatedDays }); });
+
 
   }
 
