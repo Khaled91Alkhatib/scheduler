@@ -13,6 +13,7 @@ export default function DayListItem(props) {
       return `${props.spots} spots remaining` ;
     }
   }
+  // console.log("props", props)
 
   // Apply conditional styling depending on given props
   let dayClass = classNames("day-list__item", {

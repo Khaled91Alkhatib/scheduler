@@ -42,7 +42,7 @@ export default function Application(props) {
     />;
   });
 
-  // console.log("daily", dailyAppointments);
+  console.log("daily", dailyAppointments);
   // console.log("state", state)
   return (
     <main className="layout">

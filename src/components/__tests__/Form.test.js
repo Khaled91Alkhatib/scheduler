@@ -87,6 +87,7 @@ describe("Form", () => {
       <Form
         interviewers={interviewers}
         student="Lydia Mill-Jones"
+        interviewer={interviewers[0].id}
         onSave={jest.fn()}
         onCancel={onCancel}
       />
@@ -107,7 +108,7 @@ describe("Form", () => {
     expect(onCancel).toHaveBeenCalledTimes(1);
   });
 
-  // The commented out tests below are replaced by the test on line 61. They are kept here fo future reference!
+  // The commented out tests below are replaced by the test on line 61. They are kept here for future reference!
 
   // it("calls onSave function when the name and interviewer is defined", () => {
   //   const onSave = jest.fn();
