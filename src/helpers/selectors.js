@@ -2,7 +2,6 @@ export function getAppointmentsForDay(state, day) {
 
   // Filter through state.days to get an object of every indiviual day that matches the parameter day
   const foundDay = state.days.filter(filteredDay => filteredDay.name === day)[0];
-  // console.log(foundDay);
 
   // This handles the possibility of not having a given day
   if (!foundDay) {
@@ -12,7 +11,6 @@ export function getAppointmentsForDay(state, day) {
   // First approach to return the array of appointments is by using for...of loop
   const results = [];
   for (const key of foundDay.appointments) {
-    // console.log(state.appointments[key]);
     if (state.appointments[key]) {
       results.push(state.appointments[key]);
     }
@@ -50,7 +48,6 @@ export function getInterviewersForDay(state, day) {
 
   // Filter through state.days to get an object of every indiviual day that matches the parameter day
   const foundDay = state.days.filter(filteredDay => filteredDay.name === day)[0];
-  // console.log(foundDay);
 
   // This handles the possibility of not having a given day
   if (!foundDay) {

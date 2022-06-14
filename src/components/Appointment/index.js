@@ -24,7 +24,6 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-  // console.log("props", props)
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -46,7 +45,6 @@ export default function Appointment(props) {
       .then(() => { transition(EMPTY); })
       .catch(err => { transition(ERROR_DELETE, true); });
   }
-  // console.log(props);
 
   return (
     <article className="appointment" data-testid="appointment">

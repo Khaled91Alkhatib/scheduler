@@ -21,15 +21,11 @@ export default function Application(props) {
   if (state.days) {
     dailyAppointments = getAppointmentsForDay(state, state.day);
   }
-  console.log("state", state);
 
 
-  // console.log("state.day", state.day)
   const interviewers = getInterviewersForDay(state, state.day);
-  // console.log(interviewers)
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-    // console.log(dailyAppointments)
     return <Appointment
       key={appointment.id}
       // {...appointment} // This way spreads the object into the props definition intead of writing them one by one
@@ -42,8 +38,6 @@ export default function Application(props) {
     />;
   });
 
-  console.log("daily", dailyAppointments);
-  // console.log("state", state)
   return (
     <main className="layout">
       <section className="sidebar">

@@ -4,7 +4,6 @@ import InterviewerListItem from "./InterviewerListItem";
 import "components/InterviewerList.scss";
 
 function InterviewerList(props) {
-  // console.log(props);
   const newArray = props.interviewers.map((interviewer) => {
     return <InterviewerListItem
       key={interviewer.id}

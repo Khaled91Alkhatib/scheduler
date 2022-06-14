@@ -25,33 +25,21 @@ export default function useApplicationData() {
       axios.get(appointmentsUrl),
       axios.get(interviewersUrl)
     ]).then((all) => {
-      // console.log("all", all);
       const newDaysState = all[0].data;
       const newAppointmentsState = all[1].data;
       const newInterviewersState = all[2].data;
-      // console.log("newinterviewers", newInterviewersState)
 
       setState(prev => ({
         ...prev,
-        // day: newDaysState[0].name,
         days: newDaysState,
         appointments: newAppointmentsState,
         interviewers: newInterviewersState
       }));
     });
-    // console.log("state.inetr", state.interviewers)
-    // Retrieve the days from the api
-    // axios.get(`http://localhost:8001/api/days`)
-    //   .then(response => {
-    // Setting the days state with the data from the response
-    // setDays(response.data);
-    //   console.log("response", response);
-    // });
   }, []);
 
 
   function bookInterview(id, interview) {
-    // console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
